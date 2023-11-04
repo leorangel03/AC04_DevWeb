@@ -1,0 +1,37 @@
+<html>
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div class="container">    
+        <h1>Registre as informações de cinco pessoas</h1>
+        <form id="inputForm">
+            <label for="name">Nome:</label>
+            <input type="text" id="name" required><br>
+            <label for="age">Idade:</label>
+            <input type="number" id="age" required><br>
+            <input type="button" value="Submeter" onclick="registrarPessoa()">
+        </form>
+    </div>
+
+    <script>
+        let pessoas = []; /*cria a lista de pessoas*/
+        function registrarPessoa() {
+            const name = document.getElementById("name").value; /* PEGA O VALOR DO INPUT DE ID='name'*/
+            const age = parseInt(document.getElementById("age").value); /* PEGA O VALOR DO INPUT DE ID='age'*/
+
+            pessoas.push({ name, age}); /*'puxa' para a lista pessoas*/
+
+            document.getElementById("name").value = ""; /*limpa os campo de dado do nome*/
+            document.getElementById("age").value = ""; /*limpa os campo de dado do nome*/
+
+            if (pessoas.length === 5) { /*verifica se tem cinco itens na lista para ir pra proxima pagina*/
+                // Redirecionar para a segunda página
+                localStorage.setItem("pessoas", JSON.stringify(pessoas));
+                window.location.href = "dados.html";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Results</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div class="container2">
+        <h1>RESULTADOS</h1>
+        <h2>LISTAS DE NOMES (OREDEM ALFABETICA)</h2>
+        <ul id="listaNomes"></ul>
+
+        <h2>INFORMAÇÕES</h2>
+        <div class="boxes">
+            <div class="inner-div" id="menorNomeBox"></div>
+            <div class="inner-div" id="maiorNomeBox"></div>
+            <div class="inner-div" id="menorIdadeBox"></div>
+            <div class="inner-div" id="idadeMedianaBox"></div>
+        </div>
+    </div>
+    <script>
+        const pessoas = JSON.parse(localStorage.getItem("pessoas"));
+        
+        pessoas.sort((a, b) => a.name.localeCompare(b.name));// Ordenar a lista de pessoas por nome
+
+        const listaNomes = document.getElementById("listaNomes");
+        const menorNomeBox = document.getElementById("menorNomeBox");
+        const maiorNomeBox = document.getElementById("maiorNomeBox");
+        const menorIdadeBox = document.getElementById("menorIdadeBox");
+        const idadeMedianaBox = document.getElementById("idadeMedianaBox");
+
+        for (const pessoa of pessoas) {
+            const listItem = document.createElement("li");
+            listItem.textContent = `${pessoa.name} - ${pessoa.age} anos`;
+            listaNomes.appendChild(listItem);
+        }
+
+        const menorNome = pessoas[0].name;
+        const maiorNome = pessoas[pessoas.length - 1].name;
+        const menorIdade = Math.min(...pessoas.map(p => p.age));
+        const idadesOrdenadas = pessoas.map(p => p.age).sort((a, b) => a - b);
+        const media = idadesOrdenadas.reduce((acumulador, numero)=> acumulador + numero, 0);
+        const mediafinal = media / 5;
+
+        menorNomeBox.textContent = `MENOR NOME - ${menorNome}`;
+        maiorNomeBox.textContent = `MAIOR NOME - ${maiorNome}`;
+        menorIdadeBox.textContent = `MENOR IDADE - ${menorIdade}`;
+        idadeMedianaBox.textContent = `IDADE MEDIA - ${mediafinal}`;
+    </script>
+</body>
+</html>
